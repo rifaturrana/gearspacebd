@@ -70,9 +70,9 @@ class StoreOrderRequest extends Request
             'billing.first_name' => 'required',
             'billing.last_name' => 'required',
             'billing.address_1' => 'required',
-            'billing.city' => 'required',
-            'billing.zip' => 'required',
-            'billing.country' => ['required', Rule::in(Country::supportedCodes())],
+            'billing.city' => 'nullable',
+            'billing.zip' => 'nullable',
+            'billing.country' => 'nullable',
             'billing.state' => 'required',
         ];
     }

@@ -197,7 +197,9 @@
                     </div>
                 </div> -->
 
-                
+                <input type="hidden" name="billing[country]" value="BD">
+                <input type="hidden" name="billing[zip]" value="1000">
+                <input type="hidden" name="billing[city]" :value="form.billing.state">
                 <div class="col-md-9">
     <div class="form-group">
         <label for="billing-state">
@@ -277,6 +279,7 @@
             <option value="TAN">Tangail</option>
             <option value="THA">Thakurgaon</option>
         </select>
+        
 
         <template x-if="errors.has('billing.state')">
             <span class="error-message" x-text="errors.get('billing.state')"></span>

@@ -80,14 +80,14 @@ class OrderService
     private function extractAddress($data)
     {
         return [
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'address_1' => $data['address_1'],
-            'address_2' => $data['address_2'] ?? null,
-            'city' => $data['city'],
-            'state' => $data['state'],
-            'zip' => $data['zip'],
-            'country' => $data['country'],
+    'first_name' => $data['first_name'],
+    'last_name' => $data['last_name'],
+    'address_1' => $data['address_1'],
+    'address_2' => $data['address_2'] ?? null,
+    'city' => $data['city'] ?? $data['state'], // Use state as city if city is not provided
+    'state' => $data['state'],
+    'zip' => $data['zip'] ?? '1000',
+    'country' => $data['country'] ?? 'BD',
         ];
     }
 
@@ -130,18 +130,18 @@ class OrderService
             'billing_last_name' => $request->billing['last_name'],
             'billing_address_1' => $request->billing['address_1'],
             'billing_address_2' => $request->billing['address_2'] ?? null,
-            'billing_city' => $request->billing['city'],
+            'billing_city' => $request->billing['city'] ?? $request->billing['state'],
             'billing_state' => $request->billing['state'],
-            'billing_zip' => $request->billing['zip'],
-            'billing_country' => $request->billing['country'],
+            'billing_zip' => $request->billing['zip'] ?? '1000',
+            'billing_country' => $request->billing['country'] ?? 'BD',
             'shipping_first_name' => $request->shipping['first_name'],
             'shipping_last_name' => $request->shipping['last_name'],
             'shipping_address_1' => $request->shipping['address_1'],
             'shipping_address_2' => $request->shipping['address_2'] ?? null,
-            'shipping_city' => $request->shipping['city'],
+            'shipping_city' => $request->shipping['city'] ?? $request->shipping['state'],
             'shipping_state' => $request->shipping['state'],
-            'shipping_zip' => $request->shipping['zip'],
-            'shipping_country' => $request->shipping['country'],
+            'shipping_zip' => $request->shipping['zip'] ?? '1000',
+            'shipping_country' => $request->shipping['country'] ?? 'BD',
             'sub_total' => Cart::subTotal()->amount(),
             'shipping_method' => Cart::shippingMethod()->name(),
             'shipping_cost' => Cart::shippingCost()->amount(),
