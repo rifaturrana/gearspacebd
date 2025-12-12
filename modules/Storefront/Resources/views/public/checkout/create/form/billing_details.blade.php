@@ -130,7 +130,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-9">
+                <!-- <div class="col-md-9">
                     <div class="form-group">
                         <label for="billing-city">
                             {{ trans('checkout::attributes.billing.city') }}<span>*</span>
@@ -149,9 +149,9 @@
                             <span class="error-message" x-text="errors.get('billing.city')"></span>
                         </template>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="col-md-9">
+                <!-- <div class="col-md-9">
                     <div class="form-group">
                         <label for="billing-zip">
                             {{ trans('checkout::attributes.billing.zip') }}<span>*</span>
@@ -170,9 +170,9 @@
                             <span class="error-message" x-text="errors.get('billing.zip')"></span>
                         </template>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="col-md-9">
+                <!-- <div class="col-md-9">
                     <div class="form-group">
                         <label for="billing-country">
                             {{ trans('checkout::attributes.billing.country') }}<span>*</span>
@@ -195,44 +195,96 @@
                             <span class="error-message" x-text="errors.get('billing.country')"></span>
                         </template>
                     </div>
-                </div>
+                </div> -->
 
+                
                 <div class="col-md-9">
-                    <div class="form-group">
-                        <label for="billing-state">
-                            {{ trans('checkout::attributes.billing.state') }}<span>*</span>
-                        </label>
+    <div class="form-group">
+        <label for="billing-state">
+            {{ __('District') }}<span>*</span>
+        </label>
 
-                        <template x-if="!hasBillingStates">
-                            <input
-                                type="text"
-                                name="billing[state]"
-                                id="billing-state"
-                                class="form-control"
-                                x-model="form.billing.state"
-                            >
-                        </template>
+        <select
+            name="billing[state]"
+            id="billing-state"
+            class="form-control"
+            x-model="form.billing.state"
+            @change="changeBillingState($event.target.value)"
+        >
+            <option value="">{{ __('Select District') }}</option>
+            <option value="BAG">Bagerhat</option>
+            <option value="BAN">Bandarban</option>
+            <option value="BAR">Barguna</option>
+            <option value="BARI">Barisal</option>
+            <option value="BHO">Bhola</option>
+            <option value="BOG">Bogra</option>
+            <option value="BRA">Brahmanbaria</option>
+            <option value="CHA">Chandpur</option>
+            <option value="CHI">Chittagong</option>
+            <option value="CHU">Chuadanga</option>
+            <option value="COM">Comilla</option>
+            <option value="COX">Cox's Bazar</option>
+            <option value="DHA">Dhaka</option>
+            <option value="DIN">Dinajpur</option>
+            <option value="FAR">Faridpur</option>
+            <option value="FEN">Feni</option>
+            <option value="GAI">Gaibandha</option>
+            <option value="GAZI">Gazipur</option>
+            <option value="GOP">Gopalganj</option>
+            <option value="HAB">Habiganj</option>
+            <option value="JAM">Jamalpur</option>
+            <option value="JES">Jessore</option>
+            <option value="JHA">Jhalokati</option>
+            <option value="JHE">Jhenaidah</option>
+            <option value="JOY">Joypurhat</option>
+            <option value="KHA">Khagrachhari</option>
+            <option value="KHU">Khulna</option>
+            <option value="KIS">Kishoreganj</option>
+            <option value="KUR">Kurigram</option>
+            <option value="KUS">Kushtia</option>
+            <option value="LAK">Lakshmipur</option>
+            <option value="LAL">Lalmonirhat</option>
+            <option value="MAD">Madaripur</option>
+            <option value="MAG">Magura</option>
+            <option value="MAN">Manikganj</option>
+            <option value="MEH">Meherpur</option>
+            <option value="MOU">Moulvibazar</option>
+            <option value="MUN">Munshiganj</option>
+            <option value="MYM">Mymensingh</option>
+            <option value="NAO">Naogaon</option>
+            <option value="NAR">Narail</option>
+            <option value="NARG">Narayanganj</option>
+            <option value="NARD">Narsingdi</option>
+            <option value="NAT">Natore</option>
+            <option value="NAW">Nawabganj</option>
+            <option value="NET">Netrakona</option>
+            <option value="NIL">Nilphamari</option>
+            <option value="NOA">Noakhali</option>
+            <option value="PAB">Pabna</option>
+            <option value="PAN">Panchagarh</option>
+            <option value="PAT">Patuakhali</option>
+            <option value="PIR">Pirojpur</option>
+            <option value="RAJB">Rajbari</option>
+            <option value="RAJ">Rajshahi</option>
+            <option value="RAN">Rangamati</option>
+            <option value="RANP">Rangpur</option>
+            <option value="SAT">Satkhira</option>
+            <option value="SHA">Shariatpur</option>
+            <option value="SHE">Sherpur</option>
+            <option value="SIR">Sirajganj</option>
+            <option value="SUN">Sunamganj</option>
+            <option value="SYL">Sylhet</option>
+            <option value="TAN">Tangail</option>
+            <option value="THA">Thakurgaon</option>
+        </select>
 
-                        <template x-if="hasBillingStates">
-                            <select
-                                name="billing[state]"
-                                id="billing-state"
-                                class="form-control arrow-black"
-                                @change="changeBillingState($event.target.value)"
-                            >
-                                <option value="">{{ trans('storefront::checkout.please_select') }}</option>
+        <template x-if="errors.has('billing.state')">
+            <span class="error-message" x-text="errors.get('billing.state')"></span>
+        </template>
+    </div>
+</div>
 
-                                <template x-for="(name, code) in states.billing" :key="code">
-                                    <option :value="code" x-html="name"></option>
-                                </template>
-                            </select>
-                        </template>
 
-                        <template x-if="errors.has('billing.state')">
-                            <span class="error-message" x-text="errors.get('billing.state')"></span>
-                        </template>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
