@@ -1,6 +1,6 @@
 <!-- File: /Users/lvbandit/Downloads/New Folder With Items/gearspace/modules/Storefront/Resources/views/public/partials/whatsapp_button.blade.php -->
 <div class="whatsapp-float">
-    <a href="https://wa.me/8801817275333" target="_blank" class="whatsapp-btn" title="Chat with us on WhatsApp">
+    <a href="https://wa.me/+8801626435955" target="_blank" class="whatsapp-btn" title="Chat with us on WhatsApp">
         <i class="lab la-whatsapp"></i>
     </a>
 </div>
@@ -8,8 +8,8 @@
 <style>
 .whatsapp-float {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 55px;
+    right: 12px;
     z-index: 100;
 }
 

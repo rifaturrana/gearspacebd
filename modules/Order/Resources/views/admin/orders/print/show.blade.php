@@ -256,7 +256,7 @@
                 WhatsApp: 
                      
                 </strong>
-                <a href="https://wa.me/8801817275333" target="_blank" style="color: #000; text-decoration: none;">
+                <a href="https://wa.me/+8801626435955" target="_blank" style="color: #000; text-decoration: none;">
 
  01817275333
  </a>

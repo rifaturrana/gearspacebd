@@ -77,6 +77,8 @@
         class="page-template {{ is_rtl() ? 'rtl' : 'ltr' }}"
         data-theme-color="{{ $themeColor->toHexString() }}"
     >
+    <!-- Load Facebook SDK for JavaScript -->
+
         <div x-data="App" class="wrapper">
             @include('storefront::public.layouts.top_nav')
             @include('storefront::public.layouts.header')

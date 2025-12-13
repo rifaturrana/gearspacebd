@@ -66,7 +66,7 @@
                 
                 {{ trans('storefront::product.compare') }}
             </button>
-        </div>
+ </div>
     </div>
 
     <div class="details-info-middle">
@@ -166,6 +166,16 @@
                 >
                     {{ trans($item->is_active ? 'storefront::product.add_to_cart' : 'storefront::product.unavailable') }}
                 </button>
+
+                <button
+    type="button"
+class="btn btn-primary btn-add-to-cart"
+    style="background: #25D366; color: white;"
+    onclick="window.open('https://wa.me/+8801626435955?text=Hi, I\'m interested in this product: {{ urlencode($product->name) }} - {{ urlencode(route('products.show', $product->slug)) }}', '_blank')"
+>
+    <i class="lab la-whatsapp"></i>
+   Chat on WhatsApp
+</button>
             </div>
         </form>
     </div>
