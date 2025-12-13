@@ -130,6 +130,27 @@
                     </div>
                 </div>
 
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label for="billing-email">
+                            {{ __('Email (Optional)') }}
+                        </label>
+
+                        <input
+                            type="email"
+                            name="billing[email]"
+                            id="billing-email"
+                            class="form-control"
+                            placeholder="{{ __('Enter email address') }}"
+                            x-model="form.billing.email"
+                        >
+
+                        <template x-if="errors.has('billing.email')">
+                            <span class="error-message" x-text="errors.get('billing.email')"></span>
+                        </template>
+                    </div>
+                </div>
+
                 <!-- <div class="col-md-9">
                     <div class="form-group">
                         <label for="billing-city">

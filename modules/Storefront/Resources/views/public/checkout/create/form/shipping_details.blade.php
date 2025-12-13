@@ -151,8 +151,27 @@
                                     >
                                 </div>
                             </div>
+  <div class="col-md-9">
+                    <div class="form-group">
+                        <label for="shipping-email">
+                            {{ __('Email (Optional)') }}
+                        </label>
 
-                            <div class="col-md-9">
+                        <input
+                            type="email"
+                            name="shipping[email]"
+                            id="shipping-email"
+                            class="form-control"
+                            placeholder="{{ __('Enter email address') }}"
+                            x-model="form.shipping.email"
+                        >
+
+                        <template x-if="errors.has('shipping.email')">
+                            <span class="error-message" x-text="errors.get('shipping.email')"></span>
+                        </template>
+                    </div>
+                </div>
+                            <!-- <div class="col-md-9">
                                 <div class="form-group">
                                     <label for="shipping-city">
                                         {{ trans('checkout::attributes.shipping.city') }}<span>*</span>
@@ -171,9 +190,9 @@
                                         <span class="error-message" x-text="errors.get('shipping.city')"></span>
                                     </template>
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="col-md-9">
+                            <!-- <div class="col-md-9">
                                 <div class="form-group">
                                     <label for="shipping-zip">
                                         {{ trans('checkout::attributes.shipping.zip') }}<span>*</span>
@@ -192,9 +211,9 @@
                                         <span class="error-message" x-text="errors.get('shipping.zip')"></span>
                                     </template>
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="col-md-9">
+                            <!-- <div class="col-md-9">
                                 <div class="form-group">
                                     <label for="shipping-country">
                                         {{ trans('checkout::attributes.shipping.country') }}<span>*</span>
@@ -218,9 +237,9 @@
                                         <span class="error-message" x-text="errors.get('shipping.country')"></span>
                                     </template>
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="col-md-9">
+                            <!-- <div class="col-md-9">
                                 <div class="form-group">
                                     <label for="shipping-state">
                                         {{ trans('checkout::attributes.shipping.state') }}<span>*</span>
@@ -257,7 +276,94 @@
                                         <span class="error-message" x-text="errors.get('shipping.state')"></span>
                                     </template>
                                 </div>
-                            </div>
+                            </div> -->
+   <input type="hidden" name="shipping[country]" value="BD">
+                <input type="hidden" name="shipping[zip]" value="1000">
+                <input type="hidden" name="shipping[city]" :value="form.shipping.state">
+                             <div class="form-group">
+        <label for="shipping-state">
+            {{ __('District') }}<span>*</span>
+        </label>
+
+        <select
+            name="shipping[state]"
+            id="shipping-state"
+            class="form-control"
+            x-model="form.shipping.state"
+            @change="changeBillingState($event.target.value)"
+        >
+            <option value="">{{ __('Select District') }}</option>
+            <option value="BAG">Bagerhat</option>
+            <option value="BAN">Bandarban</option>
+            <option value="BAR">Barguna</option>
+            <option value="BARI">Barisal</option>
+            <option value="BHO">Bhola</option>
+            <option value="BOG">Bogra</option>
+            <option value="BRA">Brahmanbaria</option>
+            <option value="CHA">Chandpur</option>
+            <option value="CHI">Chittagong</option>
+            <option value="CHU">Chuadanga</option>
+            <option value="COM">Comilla</option>
+            <option value="COX">Cox's Bazar</option>
+            <option value="DHA">Dhaka</option>
+            <option value="DIN">Dinajpur</option>
+            <option value="FAR">Faridpur</option>
+            <option value="FEN">Feni</option>
+            <option value="GAI">Gaibandha</option>
+            <option value="GAZI">Gazipur</option>
+            <option value="GOP">Gopalganj</option>
+            <option value="HAB">Habiganj</option>
+            <option value="JAM">Jamalpur</option>
+            <option value="JES">Jessore</option>
+            <option value="JHA">Jhalokati</option>
+            <option value="JHE">Jhenaidah</option>
+            <option value="JOY">Joypurhat</option>
+            <option value="KHA">Khagrachhari</option>
+            <option value="KHU">Khulna</option>
+            <option value="KIS">Kishoreganj</option>
+            <option value="KUR">Kurigram</option>
+            <option value="KUS">Kushtia</option>
+            <option value="LAK">Lakshmipur</option>
+            <option value="LAL">Lalmonirhat</option>
+            <option value="MAD">Madaripur</option>
+            <option value="MAG">Magura</option>
+            <option value="MAN">Manikganj</option>
+            <option value="MEH">Meherpur</option>
+            <option value="MOU">Moulvibazar</option>
+            <option value="MUN">Munshiganj</option>
+            <option value="MYM">Mymensingh</option>
+            <option value="NAO">Naogaon</option>
+            <option value="NAR">Narail</option>
+            <option value="NARG">Narayanganj</option>
+            <option value="NARD">Narsingdi</option>
+            <option value="NAT">Natore</option>
+            <option value="NAW">Nawabganj</option>
+            <option value="NET">Netrakona</option>
+            <option value="NIL">Nilphamari</option>
+            <option value="NOA">Noakhali</option>
+            <option value="PAB">Pabna</option>
+            <option value="PAN">Panchagarh</option>
+            <option value="PAT">Patuakhali</option>
+            <option value="PIR">Pirojpur</option>
+            <option value="RAJB">Rajbari</option>
+            <option value="RAJ">Rajshahi</option>
+            <option value="RAN">Rangamati</option>
+            <option value="RANP">Rangpur</option>
+            <option value="SAT">Satkhira</option>
+            <option value="SHA">Shariatpur</option>
+            <option value="SHE">Sherpur</option>
+            <option value="SIR">Sirajganj</option>
+            <option value="SUN">Sunamganj</option>
+            <option value="SYL">Sylhet</option>
+            <option value="TAN">Tangail</option>
+            <option value="THA">Thakurgaon</option>
+        </select>
+        
+
+        <template x-if="errors.has('shipping.state')">
+            <span class="error-message" x-text="errors.get('shipping.state')"></span>
+        </template>
+    </div>
                         </div>
                     </div>
                 </div>

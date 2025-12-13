@@ -122,7 +122,7 @@ class OrderService
     {
         return Order::create([
             'customer_id' => auth()->id(),
-            'customer_email' => $request->customer_email,
+            'customer_email' => $request->billing['email']?? $request->customer_email,
             'customer_phone' => $request->customer_phone,
             'customer_first_name' => $request->billing['first_name'],
             'customer_last_name' => $request->billing['last_name'],

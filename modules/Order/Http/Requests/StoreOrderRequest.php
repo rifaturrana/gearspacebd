@@ -84,9 +84,9 @@ class StoreOrderRequest extends Request
             'shipping.first_name' => 'required_if:ship_to_a_different_address,1',
             'shipping.last_name' => 'required_if:ship_to_a_different_address,1',
             'shipping.address_1' => 'required_if:ship_to_a_different_address,1',
-            'shipping.city' => 'required_if:ship_to_a_different_address,1',
-            'shipping.zip' => 'required_if:ship_to_a_different_address,1',
-            'shipping.country' => ['required_if:ship_to_a_different_address,1', Rule::in(Country::supportedCodes())],
+            'shipping.city' => 'nullable',
+            'shipping.zip' => 'nullable',
+            'shipping.country' => 'nullable',
             'shipping.state' => 'required_if:ship_to_a_different_address,1',
         ];
     }
