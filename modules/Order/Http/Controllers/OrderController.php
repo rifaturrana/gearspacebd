@@ -26,4 +26,6 @@ class OrderController
     {
         return view('order::show');
     }
+
+
 }

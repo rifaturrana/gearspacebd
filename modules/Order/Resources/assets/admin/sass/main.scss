@@ -72,6 +72,12 @@
     }
 
     .items-ordered {
+        .empty-state{
+        padding: 20px;
+    text-align: center;
+    color: #999;
+    font-style: italic;
+        }
         .table-responsive {
             margin-bottom: 0;
         }

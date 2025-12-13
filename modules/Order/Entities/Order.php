@@ -68,6 +68,23 @@ class Order extends Model
     {
         return !is_null($this->shipping_method);
     }
+    public function recalculateTotals()
+{
+    $subTotal = $this->products->sum(function($product) {
+        return $product->line_total->amount();
+    });
+
+    // Update order totals
+    $this->sub_total = $subTotal;
+    $this->total = $subTotal + $this->shipping_cost->amount() - $this->discount->amount();
+    
+    // If this was the last product, update order status
+    if ($this->products()->count() === 0) {
+        $this->status = self::CANCELED;
+    }
+    
+    $this->save();
+}
 
 
     public function hasCoupon()
