@@ -235,22 +235,31 @@
         <div class="invoice-header">
             <div class="company-info">
                 <div class="company-logo">
-                    <!-- Add logo here - placeholder for company logo -->
-                    <svg viewBox="0 0 100 50" style="width: 100%; height: auto;">
-                        <rect x="10" y="10" width="15" height="15" fill="none" stroke="#333" stroke-width="2" transform="rotate(45 17.5 17.5)"/>
-                        <rect x="25" y="10" width="15" height="15" fill="none" stroke="#333" stroke-width="2" transform="rotate(45 32.5 17.5)"/>
-                    </svg>
-                </div>
+                    @if ($logo = setting('storefront_header_logo'))
+                        <img src="https://gearspacebd.com/storage/media/Lat9tWCwwXa0hdX7j1kM8YTGZV2AnhzVHP2Ldl8W.jpg" alt="{{ setting('store_name') }}" style="max-width: 200px; max-height: 100px;">
+                    @else
                 <div class="company-name">{{ setting('store_name') }}</div>
-                <div class="company-tagline">Online Electronics and Accessories</div>
+                <div class="company-tagline">Premium Gadgets || Apple Accessories</div>                    @endif
+                </div>
+
             </div>
 
             <div class="store-address">
                 Motalib Plaza, Hatirpool<br>
                 Dhaka 1205, Bangladesh<br>
-                <strong>Phone:</strong> {{ setting('store_phone') }}<br>
-                <strong>Bkash Merchant:</strong> {{ setting('store_phone') }}<br>
-                <strong>Nagad Personal:</strong> {{ setting('store_phone') }}
+                <strong>Phone/Nagad:</strong> {{ setting('store_phone') }}<br>
+                <strong>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366" style="vertical-align: middle; margin-right: 5px;">
+ <path d="M17.5 14.4l-1.8-1.3c-.1-.1-.3-.1-.4 0l-1.2 1.4c-.1.1-.3.1-.4 0-1.2-.9-2-2.1-2.1-2.2-.1-.1 0-.3 0-.4l1.4-1.2c.1-.1.1-.3 0-.4l-1.3-1.8s-.1-.1-.2-.1c-.1 0-.2 0-.3.1l-1.8 1.9c-.2.2-.3.5-.3.8 0 2.5 1.2 4.9 3.1 6.6 2.1 1.9 4.7 2.8 7.4 2.8h.1c.3 0 .6-.1.8-.3l1.9-1.8c.1-.1.1-.2.1-.3 0-.1-.1-.2-.1-.2l-2.4-1.8z"/>
+ <path d="M12 0C5.4 0 0 5.4 0 12c0 2.1.5 4.1 1.6 5.9L0 24l6.3-1.6c1.7 1 3.7 1.5 5.7 1.5 6.6 0 12-5.4 12-12S18.6 0 12 0zm7.1 18.9c-1.8 1.2-4 1.9-6.3 1.9-1.7 0-3.4-.4-4.9-1.2l-.4-.2-3.6 1 1-3.5-.2-.4C3.6 14.4 3 13.2 3 12c0-5 4-9 9-9s9 4 9 9c0 2.2-.8 4.2-2.1 5.8l.2.1z"/>
+ </svg>    
+                WhatsApp: 
+                     
+                </strong>
+                <a href="https://wa.me/8801817275333" target="_blank" style="color: #000; text-decoration: none;">
+
+ 01817275333
+ </a>
             </div>
         </div>
 
