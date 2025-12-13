@@ -13,7 +13,7 @@
                                 <th>{{ trans('order::orders.quantity') }}</th>
                                 <th>{{ trans('order::orders.line_total') }}</th>
                                 @if (!in_array($order->status, [\Modules\Order\Entities\Order::COMPLETED, \Modules\Order\Entities\Order::CANCELED, \Modules\Order\Entities\Order::REFUNDED]))
-                                    <th>{{ trans('admin::admin.actions') }}</th>
+                                    <th>Actions</th>
                                 @endif
                             </tr>
                         </thead>
@@ -100,7 +100,7 @@ $(document).ready(function() {
         const productId = button.data('product-id');
         const orderId = button.data('order-id');
         
-        if (!confirm('{{ trans("order::messages.confirm_delete_product") }}')) {
+        if (!confirm('Are you sure?')) {
             return;
         }
         

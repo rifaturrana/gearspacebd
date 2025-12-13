@@ -111,6 +111,8 @@
         @stack('pre-scripts')
         @stack('scripts')
 
+        @include('storefront::public.partials.whatsapp_button')
         {!! setting('custom_footer_assets') !!}
+
     </body>
 </html>
