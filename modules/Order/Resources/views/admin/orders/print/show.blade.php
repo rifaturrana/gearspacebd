@@ -11,240 +11,364 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-    @vite(['modules/Order/Resources/assets/admin/sass/print.scss'])
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #000;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+        }
+
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .company-info {
+            flex: 1;
+        }
+
+        .company-logo {
+            width: 120px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+
+        .company-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .company-tagline {
+            font-size: 9px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .store-address {
+            text-align: right;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .store-address strong {
+            font-weight: 600;
+        }
+
+        .document-title {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .customer-order-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .customer-details, .order-details {
+            flex: 1;
+        }
+
+        .section-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .detail-row {
+            margin-bottom: 3px;
+            font-size: 12px;
+        }
+
+        .order-details {
+            text-align: right;
+        }
+
+        .thank-you-message {
+            margin: 20px 0;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 12px;
+        }
+
+        .products-table thead {
+            background: #f8f8f8;
+        }
+
+        .products-table th {
+            padding: 8px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .products-table th:last-child,
+        .products-table td:last-child {
+            text-align: right;
+        }
+
+        .products-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .product-name {
+            font-weight: 500;
+        }
+
+        .product-sku {
+            color: #666;
+            font-size: 9px;
+        }
+
+        .product-variations {
+            color: #666;
+            font-size: 9px;
+            margin-top: 3px;
+        }
+
+        .totals-section {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .totals-table {
+            width: 300px;
+            font-size: 12px;
+        }
+
+        .totals-table tr {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .totals-table td {
+            padding: 8px 0;
+        }
+
+        .totals-table td:first-child {
+            text-align: left;
+        }
+
+        .totals-table td:last-child {
+            text-align: right;
+            font-weight: 500;
+        }
+
+        .totals-table .total-row {
+            font-weight: 600;
+            font-size: 12px;
+            border-top: 2px solid #333;
+            border-bottom: none;
+        }
+
+        .totals-table .total-row td {
+            padding-top: 12px;
+        }
+
+        .customer-note {
+            margin-top: 20px;
+            font-size: 12px;
+        }
+
+        .customer-note-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            font-size: 9px;
+            color: #666;
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 
 <body class="{{ is_rtl() ? 'rtl' : 'ltr' }}">
-    <!--[if lt IE 8]>
-        <p>You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a>
-            to improve your experience.</p>
-        <![endif]-->
-
     <div class="container">
-        <div class="invoice-wrapper clearfix">
-            <div class="row">
-                <div class="invoice-header clearfix">
-                    <div class="col-md-3">
-                        <div class="store-name">
-                            <h1>{{ setting('store_name') }}</h1> 
-                        </div>
-                    </div>
-
-                    <div class="col-md-9 clearfix">
-                        <div class="invoice-header-right pull-right">
-                            <span class="title">{{ trans('order::print.invoice') }}</span>
-
-                            <div class="invoice-info clearfix">
-                                <div class="invoice-id">
-                                    <label for="invoice-id">{{ trans('order::print.invoice_id') }}:</label>
-                                    <span>#{{ $order->id }}</span>
-                                </div>
-
-                                <div class="invoice-date">
-                                    <label for="invoice-date">{{ trans('order::print.date') }}:</label>
-                                    <span>{{ $order->created_at->format('Y / m / d') }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="invoice-header">
+            <div class="company-info">
+                <div class="company-logo">
+                    <!-- Add logo here - placeholder for company logo -->
+                    <svg viewBox="0 0 100 50" style="width: 100%; height: auto;">
+                        <rect x="10" y="10" width="15" height="15" fill="none" stroke="#333" stroke-width="2" transform="rotate(45 17.5 17.5)"/>
+                        <rect x="25" y="10" width="15" height="15" fill="none" stroke="#333" stroke-width="2" transform="rotate(45 32.5 17.5)"/>
+                    </svg>
                 </div>
+                <div class="company-name">{{ setting('store_name') }}</div>
+                <div class="company-tagline">Online Electronics and Accessories</div>
             </div>
 
-            <div class="invoice-body clearfix">
-                <div class="invoice-details-wrapper">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="invoice-details">
-                                <h5>{{ trans('order::print.order_details') }}</h5>
-
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td>{{ trans('order::print.email') }}:</td>
-                                                <td>{{ $order->customer_email }}</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>{{ trans('order::print.phone') }}:</td>
-                                                <td>{{ $order->customer_phone }}</td>
-                                            </tr>
-
-                                            @if ($order->shipping_method)
-                                                <tr>
-                                                    <td>{{ trans('order::print.shipping_method') }}:</td>
-                                                    <td>{{ $order->shipping_method }}</td>
-                                                </tr>
-                                            @endif
-
-                                            <tr>
-                                                <td>{{ trans('order::print.payment_method') }}:</td>
-                                                <td>
-                                                    {{ $order->payment_method }}
-
-                                                    @if ($order->payment_method === 'Bank Transfer')
-                                                        <br>
-
-                                                        <span style="color: #999; font-size: 13px;">{!! setting('bank_transfer_instructions') !!}</span>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="invoice-address">
-                                <h5>{{ trans('order::print.billing_address') }}</h5>
-
-                                <span>{{ $order->billing_full_name }}</span>
-                                <span>{{ $order->billing_address_1 }}</span>
-                                <span>{{ $order->billing_address_2 }}</span>
-                                <span>{{ $order->billing_city }}, {!! $order->billing_state_name !!} {{ $order->billing_zip }}</span>
-                                <span>{{ $order->billing_country_name }}</span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6">
-                            <div class="invoice-address">
-                                <h5>{{ trans('order::print.shipping_address') }}</h5>
-
-                                <span>{{ $order->shipping_full_name }}</span>
-                                <span>{{ $order->shipping_address_1 }}</span>
-                                <span>{{ $order->shipping_address_2 }}</span>
-                                <span>{{ $order->shipping_city }}, {!! $order->shipping_state_name !!}
-                                    {{ $order->shipping_zip }}</span>
-                                <span>{{ $order->shipping_country_name }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="cart-list">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>{{ trans('order::print.product') }}</th>
-                                        <th>{{ trans('order::print.unit_price') }}</th>
-                                        <th>{{ trans('order::print.quantity') }}</th>
-                                        <th>{{ trans('order::print.line_total') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($order->products as $product)
-                                        <tr>
-                                            <td>
-                                                <span>{{ $product->name }}</span>
-
-                                                @if ($product->hasAnyVariation())
-                                                    <div class="option">
-                                                        @foreach ($product->variations as $variation)
-                                                            <span>
-                                                                {{ $variation->name }}:
-
-                                                                <span>
-                                                                    {{ $variation->values()->first()?->label }}{{ $loop->last ? '' : ',' }}
-                                                                </span>
-                                                            </span>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-
-                                                @if ($product->hasAnyOption())
-                                                    <div class="option">
-                                                        @foreach ($product->options as $option)
-                                                            <span>
-                                                                {{ $option->name }}:
-
-                                                                <span>
-                                                                    @if ($option->option->isFieldType())
-                                                                        {{ $option->value }}
-                                                                    @else
-                                                                        {{ $option->values->implode('label', ', ') }}
-                                                                    @endif
-                                                                </span>
-                                                            </span>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-                                            </td>
-
-                                            <td>
-                                                <label
-                                                    class="visible-xs">{{ trans('order::print.unit_price') }}:</label>
-                                                <span>{{ $product->unit_price->convert($order->currency, $order->currency_rate)->convert($order->currency, $order->currency_rate)->format($order->currency) }}</span>
-                                            </td>
-
-                                            <td>
-                                                <label class="visible-xs">{{ trans('order::print.quantity') }}:</label>
-                                                <span>{{ $product->qty }}</span>
-                                            </td>
-                                            <td>
-                                                <label
-                                                    class="visible-xs">{{ trans('order::print.line_total') }}:</label>
-                                                <span>{{ $product->line_total->convert($order->currency, $order->currency_rate)->format($order->currency) }}</span>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="total pull-right">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td>{{ trans('order::print.subtotal') }}</td>
-                                    <td>{{ $order->sub_total->convert($order->currency, $order->currency_rate)->format($order->currency) }}
-                                    </td>
-                                </tr>
-
-                                @if ($order->hasShippingMethod())
-                                    <tr>
-                                        <td>{{ $order->shipping_method }}</td>
-                                        <td>{{ $order->shipping_cost->convert($order->currency, $order->currency_rate)->format($order->currency) }}
-                                        </td>
-                                    </tr>
-                                @endif
-
-                                @if ($order->hasCoupon())
-                                    <tr>
-                                        <td>
-                                            {{ trans('order::orders.coupon') }} <span
-                                                class="coupon-code">({{ $order->coupon->code }})</span>
-                                        </td>
-                                        <td>
-                                            &#8211;{{ $order->discount->convert($order->currency, $order->currency_rate)->format($order->currency) }}
-                                        </td>
-                                    </tr>
-                                @endif
-
-                                @foreach ($order->taxes as $tax)
-                                    <tr>
-                                        <td>{{ $tax->name }}</td>
-                                        <td class="text-right">
-                                            {{ $tax->order_tax->amount->convert($order->currency, $order->currency_rate)->format($order->currency) }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                                <tr>
-                                    <td>{{ trans('order::print.total') }}</td>
-                                    <td>{{ $order->total->convert($order->currency, $order->currency_rate)->format($order->currency) }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="store-address">
+                Motalib Plaza, Hatirpool<br>
+                Dhaka 1205, Bangladesh<br>
+                <strong>Phone:</strong> {{ setting('store_phone') }}<br>
+                <strong>Bkash Merchant:</strong> {{ setting('store_phone') }}<br>
+                <strong>Nagad Personal:</strong> {{ setting('store_phone') }}
             </div>
+        </div>
+
+        <!-- <div class="document-title">Document</div> -->
+
+        <div class="customer-order-section">
+            <div class="customer-details">
+                <div class="section-title">Customer Details:</div>
+                <div class="detail-row"><strong>{{ $order->customer_first_name }} {{ $order->customer_last_name }}</strong></div>
+                <div class="detail-row"><strong>Phone:</strong> {{ $order->customer_phone }}</div>
+                <div class="detail-row"><strong>Address:</strong> {{ $order->shipping_address_1 }}@if($order->shipping_address_2), {{ $order->shipping_address_2 }}@endif</div>
+            </div>
+
+            <div class="order-details">
+                <div class="detail-row"><strong>Order No:</strong> {{ $order->id }}</div>
+                <div class="detail-row"><strong>Order Date:</strong> {{ $order->created_at->format('d/m/Y H:i') }}</div>
+                <div class="detail-row"><strong>Payable:</strong> ৳ {{ number_format($order->total->amount(), 1) }}</div>
+            </div>
+        </div>
+
+        <div class="thank-you-message">
+            Dear <strong>{{ $order->customer_first_name }} {{ $order->customer_last_name }}</strong>,<br>
+            Thank you very much for your order and the trust you have placed in <strong>{{ setting('store_name') }}</strong>. I hereby invoice you for the following:
+        </div>
+
+        <table class="products-table">
+            <thead>
+                <tr>
+                    <th>Pos.</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($order->products as $index => $product)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>
+                        <div class="product-name">{{ $product->name }}</div>
+                        @if($product->sku)
+                        <div class="product-sku">SKU: {{ $product->sku }}</div>
+                        @endif
+                        @if ($product->hasAnyVariation())
+                        <div class="product-variations">
+                            @foreach ($product->variations as $variation)
+                            {{ $variation->name }}: {{ $variation->values()->first()?->label }}{{ $loop->last ? '' : ', ' }}
+                            @endforeach
+                        </div>
+                        @endif
+                        @if ($product->hasAnyOption())
+                        <div class="product-variations">
+                            @foreach ($product->options as $option)
+                            {{ $option->name }}: 
+                            @if ($option->option->isFieldType())
+                                {{ $option->value }}
+                            @else
+                                {{ $option->values->implode('label', ', ') }}
+                            @endif
+                            {{ $loop->last ? '' : ', ' }}
+                            @endforeach
+                        </div>
+                        @endif
+                    </td>
+                    <td>{{ $product->qty }} Pc(s)</td>
+                    <td>৳ {{ number_format($product->unit_price->amount(), 1) }}</td>
+                    <td>৳ {{ number_format($product->line_total->amount(), 1) }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        <div class="totals-section">
+            <table class="totals-table">
+                <tr>
+                    <td>Subtotal</td>
+                    <td>৳ {{ number_format($order->sub_total->amount(), 1) }}</td>
+                </tr>
+                @if ($order->hasShippingMethod())
+                <tr>
+                    <td>Shipping:</td>
+                    <td>৳ {{ number_format($order->shipping_cost->amount(), 1) }}</td>
+                </tr>
+                @endif
+                <tr>
+                    <td>Total</td>
+                    <td>৳ {{ number_format($order->sub_total->amount() + ($order->hasShippingMethod() ? $order->shipping_cost->amount() : 0), 1) }}</td>
+                </tr>
+                @foreach ($order->taxes as $tax)
+                <tr>
+                    <td>{{ $tax->name }}</td>
+                    <td>৳ {{ number_format($tax->order_tax->amount->amount(), 1) }}</td>
+                </tr>
+                @endforeach
+                <tr>
+                    <td>Total Paid</td>
+                    <td>৳ {{ number_format($order->total->amount(), 1) }}</td>
+                </tr>
+                <tr>
+                    <td>Total Due</td>
+                    <td>৳ 0.0</td>
+                </tr>
+                <!-- <tr class="total-row">
+                    <td></td>
+                    <td>৳ {{ number_format($order->total->amount(), 1) }}</td>
+                </tr> -->
+            </table>
+        </div>
+
+        <div class="customer-note">
+            <div class="customer-note-title">Customer Note:</div>
+            <div>Yours sincerely,</div>
+            <div><strong>{{ setting('store_name') }}</strong></div>
+        </div>
+
+        <div class="footer">
+            https://store.{{ strtolower(str_replace(' ', '', setting('store_name'))) }}.com/sells
         </div>
     </div>
 
