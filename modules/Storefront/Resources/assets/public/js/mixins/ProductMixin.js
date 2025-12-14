@@ -128,5 +128,31 @@ export default function (product) {
                     this.addingToCart = false;
                 });
         },
+        buyNow() {
+    if (this.addingToCart) {
+        return;
+    }
+
+    this.addingToCart = true;
+
+    let url = `/cart/items?product_id=${this.product.id}&qty=${1}`;
+
+    if (this.hasAnyVariant) {
+        url += `&variant_id=${this.item.id}`;
+    }
+
+    axios
+        .post(url)
+        .then((response) => {
+            this.$store.cart.updateCart(response.data);
+            window.location.href = '/checkout';
+        })
+        .catch((error) => {
+            notify(error.response.data.message);
+        })
+        .finally(() => {
+            this.addingToCart = false;
+        });
+},
     };
 }

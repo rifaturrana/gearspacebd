@@ -806,6 +806,32 @@ Alpine.data("ProductShow", ({ product, variant, reviewCount, avgRating }) => ({
             });
     },
 
+    buyNow() {
+        if (this.isAddToCartDisabled) return;
+
+        this.addingToCart = true;
+
+        axios
+            .post("/cart/items", {
+                ...this.cartItemForm,
+                ...(this.hasAnyVariant && { variant_id: this.item.id }),
+            })
+            .then((response) => {
+                this.$store.cart.updateCart(response.data);
+                window.location.href = '/checkout';
+            })
+            .catch(({ response }) => {
+                if (response.status === 422) {
+                    this.errors.record(response.data.errors);
+                }
+
+                notify(response.data.message);
+            })
+            .finally(() => {
+                this.addingToCart = false;
+            });
+    },
+
     toggleDescriptionContent() {
         this.showDescriptionContent = !this.showDescriptionContent;
     },

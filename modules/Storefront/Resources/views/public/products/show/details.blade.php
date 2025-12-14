@@ -98,6 +98,7 @@
             @input="errors.clear($event.target.name)"
             @submit.prevent="addToCart"
         >
+            @csrf
             @if ($product->variant)
                 <div class="product-variants">
                     @include('storefront::public.products.show.variations')
@@ -167,17 +168,145 @@
                     {{ trans($item->is_active ? 'storefront::product.add_to_cart' : 'storefront::product.unavailable') }}
                 </button>
 
-                <button
+
+
+            </div>
+        </form>
+        <button
     type="button"
-class="btn btn-primary btn-add-to-cart"
-    style="background: #25D366; color: white;"
+    class="btn btn-primary btn-buy-now"
+    :class="{'btn-loading': addingToCart }"
+    :disabled="isAddToCartDisabled"
+    onclick="buyNowProduct({{ $product->id }}, {{ $product->variant ? $product->variant->id : 'null' }})"
+    style="margin-top: 10px; width: 100%;"
+>
+    {{ trans('storefront::product.buy_now') }}
+</button>
+     <button
+    type="button"
+class="btn btn-primary btn-buy-now"
+    style="background: #25D366; color: white; margin-top: 10px; width: 100%;"
     onclick="window.open('https://wa.me/+8801626435955?text=Hi, I\'m interested in this product: {{ urlencode($product->name) }} - {{ urlencode(route('products.show', $product->slug)) }}', '_blank')"
 >
     <i class="lab la-whatsapp"></i>
    Chat on WhatsApp
 </button>
-            </div>
-        </form>
+
+<script>
+function buyNowProduct(productId, variantId) {
+    const qty = document.getElementById('qty').value || 1;
+    
+    // Collect all product data
+    const productData = {
+        product_id: productId,
+        qty: qty
+    };
+    
+    if (variantId) {
+        productData.variant_id = variantId;
+    }
+    
+    // Get all option values
+    const options = {};
+    document.querySelectorAll('select, input[type="radio"]:checked, input[type="checkbox"]:checked, input[type="text"], input[type="date"], input[type="datetime-local"], input[type="time"], textarea').forEach(el => {
+        if (el.name && el.name.includes('options[')) {
+            const optionId = el.name.match(/\d+/)[0];
+            if (el.type === 'checkbox') {
+                if (!options[optionId]) options[optionId] = [];
+                options[optionId].push(el.value);
+            } else {
+                options[optionId] = el.value;
+            }
+        }
+    });
+    
+    if (Object.keys(options).length > 0) {
+        productData.options = options;
+    }
+    
+    // Disable button and show loading
+    const btn = event.target;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+    
+    // Add to cart first, then redirect to checkout
+    let csrfToken = null;
+    
+    // Try multiple ways to get CSRF token
+    if (document.querySelector('meta[name="csrf-token"]')) {
+        csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    } else if (document.querySelector('input[name="_token"]')) {
+        csrfToken = document.querySelector('input[name="_token"]').value;
+    } else if (typeof window.Laravel !== 'undefined' && window.Laravel.csrfToken) {
+        csrfToken = window.Laravel.csrfToken;
+    } else if (typeof window.FleetCart !== 'undefined' && window.FleetCart.csrfToken) {
+        csrfToken = window.FleetCart.csrfToken;
+    }
+    
+    // If still no token, try to get from any input with name containing token
+    if (!csrfToken) {
+        const tokenInput = document.querySelector('input[name*="token"]');
+        if (tokenInput) {
+            csrfToken = tokenInput.value;
+        }
+    }
+    
+    // If still no token, we can't proceed
+    if (!csrfToken) {
+        alert('Security token not found. Please refresh the page and try again.');
+        btn.disabled = false;
+        btn.innerHTML = '{{ trans('storefront::product.buy_now') }}';
+        return;
+    }
+    
+    // Build form data for cart API
+    const formData = new FormData();
+    formData.append('product_id', productData.product_id);
+    formData.append('qty', productData.qty);
+    if (productData.variant_id) {
+        formData.append('variant_id', productData.variant_id);
+    }
+    
+    // Add options to form data
+    if (productData.options) {
+        Object.keys(productData.options).forEach(key => {
+            if (Array.isArray(productData.options[key])) {
+                productData.options[key].forEach(value => {
+                    formData.append(`options[${key}][]`, value);
+                });
+            } else {
+                formData.append(`options[${key}]`, productData.options[key]);
+            }
+        });
+    }
+    
+    // Add to cart
+    fetch('/cart/items', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json',
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Update cart if needed
+        if (window.Alpine && window.Alpine.store) {
+            window.Alpine.store('cart').updateCart(data);
+        }
+        // Redirect to checkout
+        window.location.href = '/checkout';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+        // Reset button
+        btn.disabled = false;
+        btn.innerHTML = '{{ trans('storefront::product.buy_now') }}';
+    });
+}
+</script>
     </div>
 
     <div class="details-info-bottom">

@@ -10,6 +10,7 @@ return [
     'options' => [
         'choose_an_option' => 'Choose an option',
     ],
+    'buy_now' => 'Buy Now',
     'quantity' => 'Quantity',
     'add_to_cart' => 'Add to Cart',
     'unavailable' => 'Unavailable',
