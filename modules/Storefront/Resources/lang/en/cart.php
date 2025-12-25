@@ -21,4 +21,6 @@ return [
     'your_cart_is_empty' => 'Your cart is empty',
     'looks_like_you_haven\'t_made_any_choice_yet' => 'Looks like you haven\'t made any choice yet.',
     'continue_shopping' => 'Continue Shopping',
+    'update_cart' => 'Update Cart',
+    'cart_updated_successfully' => 'Cart updated successfully',
 ];

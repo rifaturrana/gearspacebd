@@ -13,6 +13,7 @@ Alpine.data("Cart", () => ({
     },
 
     init() {
+        console.log('Cart component initialized');
         Alpine.effect(() => {
             if (this.cartFetched) {
                 this.hideSkeleton();
@@ -35,5 +36,33 @@ Alpine.data("Cart", () => ({
             .catch((error) => {
                 notify(error.response.data.message);
             });
+    },
+
+    testFunction() {
+        console.log('Test function called');
+        alert('Test function works!');
+    },
+
+    async updateCart() {
+        console.log('Update cart function called');
+        const button = document.querySelector('.update-cart-btn');
+        const originalContent = button.innerHTML;
+        
+        // Show loading state
+        button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Updating...';
+        button.disabled = true;
+        
+        try {
+            const { data } = await axios.get("/cart/get");
+            this.$store.cart.updateCart(data);
+            notify("Cart updated successfully");
+        } catch (error) {
+            console.error('Update cart error:', error);
+            notify(error.response?.data?.message || "Something went wrong");
+        } finally {
+            // Restore button state
+            button.innerHTML = originalContent;
+            button.disabled = false;
+        }
     },
 }));
